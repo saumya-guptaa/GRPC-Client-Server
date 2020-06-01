@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+message Text {
+    string value = 1;
+    string dest=2;
+}
+message returntext{
+    string value=1;
+}
+
+service Translator {
+    rpc GoogTrans(Text) returns (returntext) {}
+}
