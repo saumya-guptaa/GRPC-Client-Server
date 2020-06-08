@@ -16,6 +16,7 @@
 from concurrent import futures
 import os
 import time
+from time import sleep
 
 import grpc
 
@@ -28,18 +29,19 @@ _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 class Greeter(helloworld_pb2_grpc.GreeterServicer):
 
     def SayHello(self, request, context):
+        sleep(0.1)
         return helloworld_pb2.HelloReply(message='Hello, %s from host=%s!' % (request.name, os.environ.get("HOSTNAME", "Unknown")))
 
 
 def serve():
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=20))
     helloworld_pb2_grpc.add_GreeterServicer_to_server(Greeter(), server)
     with open('server.key', 'rb') as f:
     	private_key = f.read()
     with open('server.crt', 'rb') as f:
     	certificate_chain = f.read()
     server_credentials = grpc.ssl_server_credentials( ( (private_key, certificate_chain), ) )
-    server.add_secure_port('[::]:50051',server_credentials)
+    server.add_secure_port('[::]:'+os.environ.get("port"),server_credentials)
     server.start()
     try:
         while True:

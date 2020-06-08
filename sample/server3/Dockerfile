@@ -17,7 +17,7 @@ RUN apt-get install python3 -y
 RUN apt-get install python3-pip -y
 RUN pip3 install grpcio
 FROM grpc/python:1.4
-RUN pip3 install googletrans
+RUN pip3 install --upgrade google-cloud-translate
 
 
 WORKDIR /source/translator

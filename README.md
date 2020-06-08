@@ -2,7 +2,11 @@ Demonstrates proxying gRPC traffic with HAProxy.
 
 ## Set Up
 
-Be sure that you have [Docker](https://docs.docker.com/v17.12/install/) and [Docker Compose](https://docs.docker.com/compose/install/) (version 3 or newer) installed. Then, run:
+Be sure that you have [Docker](https://docs.docker.com/v17.12/install/) and [Docker Compose](https://docs.docker.com/compose/install/) (version 3 or newer) installed. 
+
+Keep your json file in /sample/server3
+
+Then, run:
 
 ```
 sudo docker-compose build

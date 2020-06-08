@@ -2,6 +2,11 @@ from __future__ import print_function
 import os
 import grpc
 
+from datetime import datetime
+from time import sleep
+from concurrent import futures
+import matplotlib.pyplot as plt
+
 import helloworld_pb2
 import helloworld_pb2_grpc
 
@@ -23,10 +28,12 @@ def run():
     #print(os.environ.get("SERVER_ADDRESS"))
     print("\n calling default server---- \n")
     channel = grpc.secure_channel(os.environ.get("SERVER_ADDRESS"),credentials)
+    count=0
     for _ in range(10):
         stub = helloworld_pb2_grpc.GreeterStub(channel)
         response = stub.SayHello(helloworld_pb2.HelloRequest(name='you'))
-        print("Greeter client received: " + response.message)
+        count=count+1
+        print("Greeter client received: " + response.message+str(count))
         
 def run1():
     with open('haproxy.crt', 'rb') as f:
@@ -87,6 +94,7 @@ def run3():
         f.close
     with open ("result.log",'r') as f:
         print(f.read(500))
+        print("\n")
         f.close()
 
 if __name__ == '__main__':

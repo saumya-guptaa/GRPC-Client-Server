@@ -1,6 +1,7 @@
 import grpc
 from concurrent import futures
 import time
+import os
 
 #import sys
 #reload(sys)
@@ -8,21 +9,22 @@ import time
 
 import translator_pb2
 import translator_pb2_grpc
-from googletrans import Translator
+# from googletrans import Translator
+from google.cloud import translate_v2 as translate
 
-translator = Translator()
+# translator = Translator()
+translate_client = translate.Client()
+
 
 class TranslatorServicer(translator_pb2_grpc.TranslatorServicer):
-
     def GoogTrans(self, request, context):
         response =translator_pb2.Text()
-        response.value = str(translator.translate(request.value,dest=request.dest))
-        print(response)
+        response.value = str(translate_client.translate(request.value,target_language=request.dest))
         return response
 
 
 # create a gRPC server
-server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+server = grpc.server(futures.ThreadPoolExecutor(max_workers=20))
 
 
 translator_pb2_grpc.add_TranslatorServicer_to_server(
