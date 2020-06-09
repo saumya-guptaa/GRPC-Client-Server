@@ -125,7 +125,7 @@ services:
     environment:
     - "SERVER_ADDRESS=haproxy:3001"
     - "Text=good morning"
-    - "dest=ru"
+    - "dest=en"
     depends_on:
     - haproxy
       

@@ -74,6 +74,7 @@ def run2():
     s1=os.environ.get("Text")
     s2=os.environ.get("dest")
     text = translator_pb2.Text(value=s1,dest=s2)
+    # text = text.encode(encoding='UTF-8',errors='strict')
     response = stub.GoogTrans(text)
     print(response.value)
 

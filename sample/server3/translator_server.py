@@ -3,9 +3,10 @@ from concurrent import futures
 import time
 import os
 
-#import sys
-#reload(sys)
-#sys.setdefaultencoding('utf-8')
+
+# import sys
+# reload(sys)
+# sys.setdefaultencoding('utf-8')
 
 import translator_pb2
 import translator_pb2_grpc
@@ -19,7 +20,14 @@ translate_client = translate.Client()
 class TranslatorServicer(translator_pb2_grpc.TranslatorServicer):
     def GoogTrans(self, request, context):
         response =translator_pb2.Text()
+        # s1='你好，世界'
+        # s1.decode(encoding='UTF-8',errors='strict')
+        # s1=str(s1)
+        # s1.encode("utf-8")
+        # response.value = s1
+
         response.value = str(translate_client.translate(request.value,target_language=request.dest))
+        # print(response.value)
         return response
 
 
