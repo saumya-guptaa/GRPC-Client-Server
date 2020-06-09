@@ -30,7 +30,7 @@ def run():
     channel = grpc.secure_channel(os.environ.get("SERVER_ADDRESS"),credentials)
     workers=1
     j=0
-    while (workers<=10):
+    while (workers<=100):
         startTime = datetime.now()
         executor = futures.ThreadPoolExecutor(max_workers=workers)
         future=list(executor.map(run_translator,[channel for i in range(workers)]))

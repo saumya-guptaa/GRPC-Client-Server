@@ -125,7 +125,19 @@ services:
     environment:
     - "SERVER_ADDRESS=haproxy:3001"
     - "Text=good morning"
-    - "dest=en"
+    - "dest=ru"
+    depends_on:
+    - haproxy
+    
+  client3:
+    build:
+      context: ./sample/client3
+      dockerfile: Dockerfile
+    volumes:
+    - "./sample/client3/:/etc/data3/"
+    environment:
+    - "SERVER_ADDRESS=haproxy:3001"
+    - "dest=hi"
     depends_on:
     - haproxy
       

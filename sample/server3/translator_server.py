@@ -3,10 +3,9 @@ from concurrent import futures
 import time
 import os
 
-
-# import sys
-# reload(sys)
-# sys.setdefaultencoding('utf-8')
+#import sys
+#reload(sys)
+#sys.setdefaultencoding('utf-8')
 
 import translator_pb2
 import translator_pb2_grpc
@@ -19,16 +18,21 @@ translate_client = translate.Client()
 
 class TranslatorServicer(translator_pb2_grpc.TranslatorServicer):
     def GoogTrans(self, request, context):
-        response =translator_pb2.Text()
-        # s1='你好，世界'
-        # s1.decode(encoding='UTF-8',errors='strict')
-        # s1=str(s1)
-        # s1.encode("utf-8")
-        # response.value = s1
-
-        response.value = str(translate_client.translate(request.value,target_language=request.dest))
-        # print(response.value)
-        return response
+        response =translator_pb2.returntext()
+        if request.value=='\n': 
+            return translator_pb2.returntext(value=request.value)
+        else :
+            result=translate_client.translate(request.value,target_language=request.dest)
+            response.value = str(result['translatedText'])
+            return response
+        
+    def StreamTrans(self, request_iterator, context):
+        for line in request_iterator:
+            if line.value=='\n':
+                yield translator_pb2.returntext(value=line.value)
+            else:
+                result = translate_client.translate(line.value,target_language=line.dest)
+                yield translator_pb2.returntext(value=str(result['translatedText']))
 
 
 # create a gRPC server

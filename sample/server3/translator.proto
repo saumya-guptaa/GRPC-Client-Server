@@ -10,4 +10,5 @@ message returntext{
 
 service Translator {
     rpc GoogTrans(Text) returns (returntext) {}
+    rpc StreamTrans(stream Text) returns (stream returntext) {}
 }
