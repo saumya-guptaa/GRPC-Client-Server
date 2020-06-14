@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+message audio {
+    // string value = 1;
+    string path=1;
+}
+message rtext{
+    string value=1;
+}
+
+service SpeechTranslator {
+    rpc translate(audio) returns (rtext){}
+}
