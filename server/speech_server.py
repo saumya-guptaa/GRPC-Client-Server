@@ -26,7 +26,7 @@ class SpeechTranslatorServicer(translator_pb2_grpc.SpeechTranslatorServicer):
             "sample_rate_hertz": sample_rate_hertz,
             "encoding": encoding,
         }
-        local_file_path = "/home/saumya/Documents/sample/client/"+request.path
+        local_file_path = "/home/saumya/Documents/GRPC-Client-Server/client/"+request.path
         with io.open(local_file_path, "rb") as f:
             content = f.read()
         audio = {"content": content}
