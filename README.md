@@ -1,8 +1,8 @@
-## Client-Server Application Using GRPC
+# Client-Server Application Using GRPC
 
 [![Generic badge](https://img.shields.io/badge/GRPC-Python-<BLUE>.svg)](https://shields.io/)
 
-# Setup
+## Setup
 
 Make Sure to install python3, grpc for python.
 
@@ -33,13 +33,13 @@ Be sure that you have [Google Cloud Translator](https://cloud.google.com/transla
 
 6. Start Translator Server
     ```
-    cd /GRPC-Client-Server/server1/
+    cd /GRPC-Client-Server/server/
     python3 translator_server.py
     ```
 
 7.  In another terminal start Speech to Text Translator Server
     ```
-    cd /GRPC-Client-Server/server2/
+    cd /GRPC-Client-Server/server/
     python3 speech_server.py
     ```
 8. In another terminal start Client
@@ -47,11 +47,6 @@ Be sure that you have [Google Cloud Translator](https://cloud.google.com/transla
     cd /GRPC-Client-Server/client/
     python3 client.py
     ```
-    
 
-```
-sudo docker-compose build
-sudo docker-compose up
-```
-
-You should see the client connect through HAProxy to the gRPC server and get a stream of "codenames".
+You can see a Client-Server Application Running
+Output received with also be stored in a file at location "/GRPC-Client-Server/client/result.txt"

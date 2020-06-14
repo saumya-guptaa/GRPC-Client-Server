@@ -1,1 +1,8 @@
-how are you doing
+
+Translator Server Output----
+String given by Client to translate: good morning
+Destined Langauge: ja
+Translated String: おはようございます
+
+Speech Server Output----
+send it anywhere.

@@ -10,9 +10,6 @@ from concurrent import futures
 import translator_pb2
 import translator_pb2_grpc
 
-import speech_pb2
-import speech_pb2_grpc
-
 import PySimpleGUI as sg
 import pyaudio
 import wave
@@ -202,19 +199,19 @@ def run3():
 
 def speech():
     with open("result"+".txt",'a+') as f:
-        f.write("\nTranslator Server parallel computations Output----\n\n")
+        f.write("\nSpeech Server Output----\n")
         f.close()
     with open('mydomain.crt', 'rb') as f:
         trusted_certs = f.read()
     credentials = grpc.ssl_channel_credentials(root_certificates=trusted_certs)
     print("\n calling speech server---- \n")
     channel = grpc.secure_channel("localhost:3001",credentials)
-    stub = speech_pb2_grpc.SpeechTranslatorStub(channel)
+    stub = translator_pb2_grpc.SpeechTranslatorStub(channel)
     s1='aud.raw'
-    rtext = speech_pb2.audio(path=s1)
+    rtext = translator_pb2.audio(path=s1)
     response = stub.translate(rtext)
-    print(response.value)
-    with open("result"+".txt",'w+') as f:
+    # print(response.value)
+    with open("result"+".txt",'a+') as f:
         f.write(response.value)
     f.close()
 
