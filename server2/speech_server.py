@@ -15,7 +15,7 @@ client = speech_v1.SpeechClient()
 
 class SpeechTranslatorServicer(speech_pb2_grpc.SpeechTranslatorServicer):
     def translate(self, request, context):
-        print(request.path)
+        # print(request.path)
         res=speech_pb2.rtext()
         # print(request.)
         language_code = "en-US"
@@ -26,7 +26,7 @@ class SpeechTranslatorServicer(speech_pb2_grpc.SpeechTranslatorServicer):
             "sample_rate_hertz": sample_rate_hertz,
             "encoding": encoding,
         }
-        local_file_path = request.path
+        local_file_path = "/home/saumya/Documents/GRPC-Client-Server/client/"+request.path
         with io.open(local_file_path, "rb") as f:
             content = f.read()
         audio = {"content": content}
