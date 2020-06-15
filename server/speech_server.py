@@ -13,6 +13,7 @@ client = speech_v1.SpeechClient()
 
 
 
+
 class SpeechTranslatorServicer(translator_pb2_grpc.SpeechTranslatorServicer):
     def translate(self, request, context):
         # print(request.path)
