@@ -42,32 +42,41 @@ def func():
     file = open("aud.raw", "wb")
     file.write(b''.join(frames))
     file.close()
+    
 
-layout = [[sg.Text('Please choose services you want to use')],
-          [sg.Checkbox('translator',default='0',key='translator')],
-          [sg.Checkbox('translator multiline parallel only',default='0',key='translator multiline parallel only')],
-          [sg.Checkbox('translator multiline parallel stream',default='0',key='translator multiline parallel stream')], 
-          [sg.Checkbox('Speech to text Translator',default='0',key = 'Speech to Text Translator')],
+sg.theme('LightGreen')
 
-          [sg.Text('Please enter required input here:')],
+layout = [[sg.Text('Please choose services you want to use', font='Courier')],
+          [sg.Checkbox('Translator',default='0',key='translator' ,size =(40,1)),sg.Checkbox('Translator Multiline parallel only',default='0',key='translator multiline parallel only')],
+          [sg.Checkbox('Translator Multiline parallel stream',default='0',key='translator multiline parallel stream',size =(40,1)),sg.Checkbox('Speech to text Translator',default='0',key = 'Speech to Text Translator')],
+          [sg.Text('_'  * 80)],  
+
+          [sg.Text('Please enter required input here:',font='Courier')],
 
           [sg.Text('Text to be translated', size=(20, 1)), sg.InputText('good morning',key='text')],
           [sg.Text('Destined Langauge', size=(20, 1)), sg.InputText('ja',key='dest')],
+          [sg.Text('..'  * 70)], 
 
-          [sg.Text('for multiline translator parallel only')],
+          [sg.Text('For multiline translator parallel only:', font='Courier')],
           [sg.Radio('Location','RAD1',size=(12, 1),default='0',key='path po') , sg.Radio('Text Box','RAD1',size=(12, 1),default='0',key='text po')],
           [sg.Text('Full path of the file', size=(20, 1)), sg.Input(key= 'path file po'), sg.FileBrowse()],
           [sg.Text('Text to be Translated', size=(20, 1)),sg.Multiline(key='multiline data po')],
           [sg.Text('Destined Language', size=(20, 1)), sg.InputText('hi',key='destpo')],
-          [sg.Text('Max workers limit', size=(20, 1)), sg.InputText('1000',key='max_workers_po')],
+          [sg.Text('Max workers limit', size=(20, 1)), sg.InputText('60',key='max_workers_po')],
+          [sg.Text('..'  * 70)], 
           
-          [sg.Text('for multiline translator parallel stream')],
+          [sg.Text('For multiline translator parallel stream:', font='Courier')],
           [sg.Radio('Location','RAD2',size=(12, 1),default='0',key='path ps') , sg.Radio('Text Box','RAD2',size=(12, 1),default='0',key='text ps')],
           [sg.Text('Full path of the file', size=(20, 1)), sg.Input(key= 'path file ps'), sg.FileBrowse()],
           [sg.Text('Text to be translated', size=(20, 1)),sg.Multiline(key='multiline data ps')],
           [sg.Text('Destined Language', size=(20, 1)), sg.InputText('hi',key='destps')],
-          [sg.Text('Max workers limit', size=(20, 1)), sg.InputText('1000',key='max_workers_ps')],
+          [sg.Text('Max workers limit', size=(20, 1)), sg.InputText('60',key='max_workers_ps')],
+          [sg.Text('..'  * 70)], 
+          
+          [sg.Text('For speech to text conversion:', font='Courier')],
           [sg.Text('Record Speech', size=(20, 1)),sg.Button('Record Audio')],
+          [sg.Text('_'  * 80)], 
+          
           [sg.Submit(), sg.Cancel()]
          ]
 
