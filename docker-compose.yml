@@ -42,9 +42,9 @@ services:
       context: ./sample/server3
       dockerfile: Dockerfile
     volumes:
-      - "./sample/server3/Intern-GRPC-eef11a753f5d.json:/etc/Intern-GRPC-eef11a753f5d.json"
+      - "./sample/server3/<key-file>:/etc/<key-file>"
     environment:
-      - "GOOGLE_APPLICATION_CREDENTIALS=/etc/Intern-GRPC-eef11a753f5d.json"
+      - "GOOGLE_APPLICATION_CREDENTIALS=/etc/<key-file>"
       - "port=50053"
     expose:
       - "50053"
@@ -54,9 +54,9 @@ services:
       context: ./sample/server3
       dockerfile: Dockerfile
     volumes:
-      - "./sample/server3/Intern-GRPC-eef11a753f5d.json:/etc/Intern-GRPC-eef11a753f5d.json"
+      - "./sample/server3/<key-file>:/etc/<key-file>"
     environment:
-      - "GOOGLE_APPLICATION_CREDENTIALS=/etc/Intern-GRPC-eef11a753f5d.json"
+      - "GOOGLE_APPLICATION_CREDENTIALS=/etc/<key-file>"
       - "port=50060"
     expose:
       - "50060"
