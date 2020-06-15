@@ -1,5 +1,6 @@
 from concurrent import futures
 import time
+import os
 import math
 import logging
 
@@ -26,7 +27,7 @@ def serve():
     with open('server.crt', 'rb') as f:
         certificate_chain = f.read()
     server_credentials = grpc.ssl_server_credentials( ( (private_key, certificate_chain), ) )
-    server.add_secure_port('[::]:50054',server_credentials)
+    server.add_secure_port('[::]:'+os.environ.get("port"),server_credentials)
     server.start()
     try:
         while True:

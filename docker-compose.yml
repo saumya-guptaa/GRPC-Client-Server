@@ -32,6 +32,8 @@ services:
     build:
       context: ./sample/server2
       dockerfile: Dockerfile
+    environment:
+      - "port=50052"
     expose:
       - "50052"
     
@@ -43,6 +45,7 @@ services:
       - "./sample/server3/Intern-GRPC-eef11a753f5d.json:/etc/Intern-GRPC-eef11a753f5d.json"
     environment:
       - "GOOGLE_APPLICATION_CREDENTIALS=/etc/Intern-GRPC-eef11a753f5d.json"
+      - "port=50053"
     expose:
       - "50053"
       
@@ -54,6 +57,7 @@ services:
       - "./sample/server3/Intern-GRPC-eef11a753f5d.json:/etc/Intern-GRPC-eef11a753f5d.json"
     environment:
       - "GOOGLE_APPLICATION_CREDENTIALS=/etc/Intern-GRPC-eef11a753f5d.json"
+      - "port=50060"
     expose:
       - "50060"
       
@@ -62,9 +66,10 @@ services:
       context: ./sample/server3
       dockerfile: Dockerfile
     volumes:
-      - "./sample/server3/Intern-GRPC-eef11a753f5d.json:/etc/Intern-GRPC-eef11a753f5d.json"
+      - "./sample/server3/<key-file>:/etc/<key-file>"
     environment:
-      - "GOOGLE_APPLICATION_CREDENTIALS=/etc/Intern-GRPC-eef11a753f5d.json"
+      - "GOOGLE_APPLICATION_CREDENTIALS=/etc/<key-file>"
+      - "port=50061"
     expose:
       - "50061"
       
@@ -72,6 +77,8 @@ services:
     build:
       context: ./sample/server4
       dockerfile: Dockerfile
+    environment:
+      - "port=50054"
     expose:
       - "50054"
       
@@ -96,6 +103,8 @@ services:
     build:
       context: ./sample/client
       dockerfile: Dockerfile
+    volumes:
+      - "./sample/client/:/etc/data1/"
     environment:
     - "SERVER_ADDRESS=haproxy:3001"
     - "Enter_Number1_here=114"
@@ -140,4 +149,17 @@ services:
     - "dest=hi"
     depends_on:
     - haproxy
+    
+  client4:
+    build:
+      context: ./sample/client4
+      dockerfile: Dockerfile
+    volumes:
+    - "./sample/client4/:/etc/data4/"
+    environment:
+    - "SERVER_ADDRESS=haproxy:3001"
+    - "dest=hi"
+    depends_on:
+    - haproxy
+      
       

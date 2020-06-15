@@ -25,77 +25,76 @@ def run():
     with open('haproxy.crt', 'rb') as f:
         trusted_certs = f.read()
     credentials = grpc.ssl_channel_credentials(root_certificates=trusted_certs)
-    #print(os.environ.get("SERVER_ADDRESS"))
     print("\n calling default server---- \n")
     channel = grpc.secure_channel(os.environ.get("SERVER_ADDRESS"),credentials)
     count=0
-    for _ in range(10):
-        stub = helloworld_pb2_grpc.GreeterStub(channel)
-        response = stub.SayHello(helloworld_pb2.HelloRequest(name='you'))
-        count=count+1
-        print("Greeter client received: " + response.message+str(count))
+    with open("/etc/data1/"+"result"+".txt",'w+') as f:
+        f.write("Greeter Client Server Output----\n"+"\n")
+        for _ in range(10):
+            stub = helloworld_pb2_grpc.GreeterStub(channel)
+            response = stub.SayHello(helloworld_pb2.HelloRequest(name='you'))
+            count=count+1
+            f.write("Greeter Client Received: "+response.message + str(count)+"\n")
+    f.close()
         
 def run1():
     with open('haproxy.crt', 'rb') as f:
         trusted_certs = f.read()
     credentials = grpc.ssl_channel_credentials(root_certificates=trusted_certs)
-    #print(os.environ.get("SERVER_ADDRESS"))
     print("\n calling calculator server---- \n")
     channel = grpc.secure_channel(os.environ.get("SERVER_ADDRESS"),credentials)
     stub = Calc_pb2_grpc.CalculatorStub(channel)
-#    p=input('Enter Number1 here: ')
-#    q=input('Enter Number2 here: ')
     a=os.environ.get("Enter_Number1_here")
     b=os.environ.get("Enter_Number2_here")
-    print("Number_1 ={}  Number_2={}".format(a,b))
+    with open("/etc/data1/"+"result"+".txt",'a+') as f:
+        f.write("\nCalculator server Output---- \n")
+        f.write("Number_1 ={}  Number_2={}".format(a,b)+"\n")
+    f.close()
     p=int(a)
     q=int(b)
-#    p=15
-#    q=2
-    response = stub.Add(Calc_pb2.AddRequest(n1=p,n2=q))
-    print("addition result : {}".format(response.n1))
-    response = stub.Substract(Calc_pb2.SubstractRequest(n1=p,n2=q))
-    print("subtraction result : {}".format(response.n1))
-    response = stub.Multiply(Calc_pb2.MultiplyRequest(n1=p,n2=q))
-    print("multiplication result : {}".format(response.n1))
-    response = stub.Divide(Calc_pb2.DivideRequest(n1=p,n2=q))
-    print("division result : {}".format(response.f1))
+    with open("/etc/data1/"+"result"+".txt",'a+') as f:
+        response = stub.Add(Calc_pb2.AddRequest(n1=p,n2=q))
+        f.write("Addition result : {}".format(response.n1)+"\n")
+        response = stub.Substract(Calc_pb2.SubstractRequest(n1=p,n2=q))
+        f.write("Subtraction result : {}".format(response.n1)+"\n")
+        response = stub.Multiply(Calc_pb2.MultiplyRequest(n1=p,n2=q))
+        f.write("Multiplication result : {}".format(response.n1)+"\n")
+        response = stub.Divide(Calc_pb2.DivideRequest(n1=p,n2=q))
+        f.write("Division result : {}".format(response.f1)+"\n")
+    f.close()
         
 def run2():
     with open('haproxy.crt', 'rb') as f:
         trusted_certs = f.read()
     credentials = grpc.ssl_channel_credentials(root_certificates=trusted_certs)
-    #print(os.environ.get("SERVER_ADDRESS"))
     print("\n calling translator server---- \n")
     channel = grpc.secure_channel(os.environ.get("SERVER_ADDRESS"),credentials)
     stub = translator_pb2_grpc.TranslatorStub(channel)
-#    s1=input('Enter string here: ')
-#    s2=input('Enter dest here: ')
     s1=os.environ.get("Text")
     s2=os.environ.get("dest")
     text = translator_pb2.Text(value=s1,dest=s2)
     response = stub.GoogTrans(text)
-    print(response.value)
+    with open("/etc/data1/"+"result"+".txt",'a+') as f:
+        f.write("\nTranslator Server Output----\n")
+        f.write("String given by Client to translate: "+ s1 + "\nDestined Langauge: "+ s2)
+        f.write("\nTranslated String: "+response.value+"\n")
+    f.close()
 
 def run3():
     with open('haproxy.crt', 'rb') as f:
         trusted_certs = f.read()
     credentials = grpc.ssl_channel_credentials(root_certificates=trusted_certs)
-    #print(os.environ.get("SERVER_ADDRESS"))
     print("\n calling log server---- \n")
     channel = grpc.secure_channel(os.environ.get("SERVER_ADDRESS"),credentials)
     stub = log_pb2_grpc.log_sharingStub(channel)
     file_name=os.environ.get("log_file")
     name=log_pb2.filename(name=file_name)
     contents=stub.Get_file(name)
-    with open ("result.log",'w') as f:
+    with open ("/etc/data1/"+"result"+".txt",'a+') as f:
+        f.write("\nLog Server Output----\n")
         for content in contents:
             f.write(content.data)
-        f.close
-    with open ("result.log",'r') as f:
-        print(f.read(500))
-        print("\n")
-        f.close()
+    f.close
 
 if __name__ == '__main__':
     run()

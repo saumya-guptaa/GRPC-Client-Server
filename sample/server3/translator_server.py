@@ -48,7 +48,7 @@ with open('server.key', 'rb') as f:
 with open('server.crt', 'rb') as f:
     certificate_chain = f.read()
 server_credentials = grpc.ssl_server_credentials( ( (private_key, certificate_chain), ) )
-server.add_secure_port('[::]:50053',server_credentials)
+server.add_secure_port('[::]:'+os.environ.get("port"),server_credentials)
 server.start()
 try:
     while True:

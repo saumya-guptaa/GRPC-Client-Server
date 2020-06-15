@@ -31,7 +31,7 @@ def run():
     j=0
     no_of_workers=[10**(i) for i in range(3)]
     time_taken=[0.0]*3
-    while (workers<=100):
+    while (workers<=10):
         startTime = datetime.now()
         executor = futures.ThreadPoolExecutor(max_workers=workers)
         future=list(executor.map(run_greeter,[channel for i in range(workers)]))
