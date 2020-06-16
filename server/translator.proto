@@ -8,8 +8,7 @@ message returntext{
     string value=1;
 }
 message audio {
-    // string value = 1;
-    string path=1;
+    bytes binary=1;
 }
 message rtext{
     string value=1;

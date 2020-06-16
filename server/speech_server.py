@@ -11,14 +11,9 @@ from google.cloud.speech_v1 import enums
 
 client = speech_v1.SpeechClient()
 
-
-
-
 class SpeechTranslatorServicer(translator_pb2_grpc.SpeechTranslatorServicer):
     def translate(self, request, context):
-        # print(request.path)
         res=translator_pb2.rtext()
-        # print(request.)
         language_code = "en-US"
         sample_rate_hertz = 16000
         encoding = enums.RecognitionConfig.AudioEncoding.LINEAR16
@@ -27,9 +22,12 @@ class SpeechTranslatorServicer(translator_pb2_grpc.SpeechTranslatorServicer):
             "sample_rate_hertz": sample_rate_hertz,
             "encoding": encoding,
         }
-        local_file_path = "/home/yash/intern/GRPC-Client-Server/client/"+request.path
-        with io.open(local_file_path, "rb") as f:
-            content = f.read()
+        
+        # local_file_path = 'aud.raw'
+        # with io.open(local_file_path, "rb") as f:
+        #     content = f.read()
+
+        content=request.binary
         audio = {"content": content}
 
         operation = client.long_running_recognize(config, audio)
@@ -40,10 +38,7 @@ class SpeechTranslatorServicer(translator_pb2_grpc.SpeechTranslatorServicer):
         for result in response.results:
             alternative = result.alternatives[0]
             s1=alternative.transcript
-        # print(s1)
-        # print("hey")
         res.value=str(s1)
-        # print(res.value)
         return res
 
 def serve():

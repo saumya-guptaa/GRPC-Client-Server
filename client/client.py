@@ -39,6 +39,7 @@ def func():
     stream.stop_stream()
     stream.close()
     audio.terminate()
+    
     file = open("aud.raw", "wb")
     file.write(b''.join(frames))
     file.close()
@@ -79,8 +80,11 @@ layout = [[sg.Text('Please choose services you want to use', font='Courier')],
           
           [sg.Submit(), sg.Cancel()]
          ]
+Layout=[[sg.Column(layout,size=(600,700),scrollable=True)]]
 
-window = sg.Window('Inputs', layout)
+window = sg.Window('Inputs', Layout)
+w, h = sg.Window.get_screen_size()
+window.size=(w,h)
 
 event, values = window.read()
 if event == 'Record Audio':
@@ -216,8 +220,11 @@ def speech():
     print("\n calling speech server---- \n")
     channel = grpc.secure_channel("localhost:3001",credentials)
     stub = translator_pb2_grpc.SpeechTranslatorStub(channel)
-    s1='aud.raw'
-    rtext = translator_pb2.audio(path=s1)
+    # s1='aud.raw'
+    with  open('aud.raw','rb') as f:
+        s1=f.read()
+        f.close()
+    rtext = translator_pb2.audio(binary=s1)
     response = stub.translate(rtext)
     # print(response.value)
     with open("result"+".txt",'a+') as f:
